@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect} from 'react';
 import RecipeCard from './RecipeCard'
-import Form from './'
+import Form from './Form'
 
 function RecipesContainer() {
     const [recipes, setRecipes] = useState([])
@@ -11,6 +11,10 @@ function RecipesContainer() {
         .then(r => r.json())
         .then(data => setRecipes(data))
     },[])
+
+    function addItem(newItem) {
+        setRecipes([newItem,...recipes])
+    }
 
 
     function handleDelete(id) {
@@ -28,6 +32,7 @@ function RecipesContainer() {
 
     return(
         <div>
+            <Form onAddItem={addItem} />
         <div className='card-container'>
             {recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} handleDelete={handleDelete} />)}</div>
 
